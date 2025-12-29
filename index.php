@@ -1,64 +1,20 @@
-﻿<?php
-session_start();
-include("config/db.php");
-
-if (!isset($_SESSION['user'])) {
-    header("Location: auth/login.php");
-    exit;
-}
-
-$students = $mysqli->query("SELECT COUNT(*) AS total FROM students")->fetch_assoc();
-$users    = $mysqli->query("SELECT COUNT(*) AS total FROM users")->fetch_assoc();
-?>
-<!doctype html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar">
 <head>
-<meta charset="utf-8">
-<title>لوحة التحكم</title>
-<link rel="stylesheet" href="/school/assets/style.css">
-<style>
-.cards{display:flex;gap:20px;margin-top:20px}
-.card{
-    flex:1;
-    background:#fff;
-    padding:25px;
-    border-radius:10px;
-    text-align:center;
-    box-shadow:0 2px 10px rgba(0,0,0,.1)
-}
-.card h1{font-size:42px;color:#2a5298;margin:0}
-</style>
+    <meta charset="UTF-8">
+    <title>نموذج زيارة ولي أمر</title>
 </head>
 <body>
 
-<header>
-    لوحة التحكم
-    <a href="auth/logout.php">خروج</a>
-</header>
+<h2>نموذج زيارة ولي أمر</h2>
 
-<div class="container">
-
-<?php include("includes/menu.php"); ?>
-
-
-<main>
-
-<h2>مرحبًا بك في نظام المدرسة</h2>
-
-<div class="cards">
-    <div class="card">
-        <h1><?php echo $students['total']; ?></h1>
-        <p>عدد الطلاب</p>
-    </div>
-
-    <div class="card">
-        <h1><?php echo $users['total']; ?></h1>
-        <p>عدد المستخدمين</p>
-    </div>
-</div>
-
-</main>
-</div>
+<form>
+    <input placeholder="اسم ولي الأمر"><br><br>
+    <input placeholder="اسم الطالب"><br><br>
+    <input placeholder="رقم الهاتف"><br><br>
+    <textarea placeholder="سبب الزيارة"></textarea><br><br>
+    <button>إرسال</button>
+</form>
 
 </body>
 </html>
