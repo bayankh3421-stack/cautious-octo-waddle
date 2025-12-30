@@ -1,16 +1,18 @@
 <?php
-$host = "db.bxcnoiolbrxulbqgozpm.supabase.co";
-$db   = "postgres";
+
+$host = "aws-0-us-east-1.pooler.supabase.com";
+$port = "5432";
+$dbname = "postgres";
 $user = "postgres";
 $pass = "Bb?0792017997";
-$port = "5432";
 
 $conn = pg_connect("
     host=$host
-    dbname=$db
+    port=$port
+    dbname=$dbname
     user=$user
     password=$pass
-    port=$port
+    sslmode=require
 ");
 
 if (!$conn) {
