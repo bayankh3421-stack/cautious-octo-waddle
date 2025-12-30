@@ -3,7 +3,7 @@
 $host = "aws-0-us-east-1.pooler.supabase.com";
 $port = "5432";
 $dbname = "postgres";
-$user = "postgres";
+$user = "postgres.bxcnoiolbrxulbqgozpm";
 $pass = "Bb?0792017997";
 
 $conn = pg_connect("
