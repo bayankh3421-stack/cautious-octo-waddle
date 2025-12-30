@@ -1,13 +1,9 @@
-FROM php:8.1-apache
+FROM php:8.2-apache
 
-# تفعيل mod_rewrite
-RUN a2enmod rewrite
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    && docker-php-ext-install pgsql pdo_pgsql
 
-# تثبيت curl
-RUN apt-get update && apt-get install -y libcurl4-openssl-dev \
-    && docker-php-ext-install curl
-
-# نسخ الملفات
 COPY . /var/www/html/
 
 EXPOSE 80
