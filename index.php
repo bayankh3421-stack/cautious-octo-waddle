@@ -1,29 +1,35 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-require_once __DIR__ . '/config/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $parent  = $_POST['parent_name'] ?? '';
-    $student = $_POST['student_name'] ?? '';
-    $phone   = $_POST['phone'] ?? '';
-    $reason  = $_POST['reason'] ?? '';
 
-    $query = "INSERT INTO parent_visits 
-        (parent_name, student_name, phone, reason)
-        VALUES ($1, $2, $3, $4)";
+    $data = [
+        "parent_name"  => $_POST["parent_name"] ?? "",
+        "student_name" => $_POST["student_name"] ?? "",
+        "phone"        => $_POST["phone"] ?? "",
+        "reason"       => $_POST["reason"] ?? ""
+    ];
 
-    $result = pg_query_params($conn, $query, [$parent, $student, $phone, $reason]);
+    $ch = curl_init("https://bxcnoiolbrxulbqgozpm.supabase.co/rest/v1/parent_visits");
 
-    if (!$result) {
-        die("خطأ في الإدخال: " . pg_last_error($conn));
-    }
+    curl_setopt_array($ch, [
+        CURLOPT_POST => true,
+        CURLOPT_HTTPHEADER => [
+            "apikey: https://bxcnoiolbrxulbqgozpm.supabase.co",
+            "Authorization: Bearer PUT_ANON_PUBLIC_KEY_HERE",
+            "Content-Type: application/json",
+            "Prefer: return=minimal"
+        ],
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_RETURNTRANSFER => true
+    ]);
+
+    curl_exec($ch);
+    curl_close($ch);
 
     $success = true;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -35,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <h2>نموذج زيارة ولي أمر</h2>
 
 <?php if (!empty($success)): ?>
-<p style="color:green;">تم حفظ الزيارة بنجاح ✅</p>
+    <p style="color:green;">تم حفظ الزيارة بنجاح ✅</p>
 <?php endif; ?>
 
 <form method="post">
