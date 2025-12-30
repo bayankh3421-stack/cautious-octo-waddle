@@ -1,10 +1,10 @@
 <?php
 
 $conn = pg_connect(
-    "host=aws-0-us-east-1.pooler.supabase.com
-     port=6543
+    "host=db.bxcnoiolbrxulbqgozpm.supabase.co
+     port=5432
      dbname=postgres
-     user=postgres.bxcnoiolbrxulbqgozpm
+     user=postgres
      password=Bb?0792017997
      sslmode=require"
 );
